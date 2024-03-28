@@ -8,7 +8,7 @@ class RegisterPage {
         cy.get('#ap_email').type(email);
         cy.get('#ap_password').type(password);
         cy.get('#ap_password_check').type(password);
-        cy.get('#continue').should('be.enabled');
+        return cy.get('#continue');
       }
 }
 export default new RegisterPage
