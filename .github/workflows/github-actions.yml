@@ -6,7 +6,7 @@ on:
     types: [opened, reopened, edited, synchronize]
 
 jobs:
-  Login-Test:
+  E2E-Test:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
