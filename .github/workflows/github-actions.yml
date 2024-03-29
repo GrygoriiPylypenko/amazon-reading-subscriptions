@@ -33,8 +33,6 @@ jobs:
         with:
           browser: ${{ matrix.browser }}
           start: npm run cy:run
-          wait-on: 'http://localhost:8080'
-          wait-on-timeout: 60
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v4
