@@ -11,9 +11,6 @@ jobs:
     strategy:
       matrix:
         browser: [chrome, firefox, edge, electron]
-        
-      fail-fast: false
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
