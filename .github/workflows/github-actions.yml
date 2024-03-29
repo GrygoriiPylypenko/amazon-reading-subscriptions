@@ -32,7 +32,7 @@ jobs:
         uses: cypress-io/github-action@v6.6.1
         with:
           browser: ${{ matrix.browser }}
-          start: cy:run
+          start: npm cy:run
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v4
