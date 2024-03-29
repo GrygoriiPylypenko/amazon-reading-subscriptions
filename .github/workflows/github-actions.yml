@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chrome, firefox, edge]
+        browser: [chrome, firefox, edge, electron]
       fail-fast: false
 
     steps:
@@ -32,7 +32,7 @@ jobs:
         uses: cypress-io/github-action@v6.6.1
         with:
           browser: ${{ matrix.browser }}
-          start: npm run cy:run
+          start: cy:run
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v4
