@@ -7,18 +7,34 @@ on:
 
 jobs:
   E2E-Test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chrome, edge, electron]
+        
+      fail-fast: false
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
-      - name: Cypress run
-        uses: cypress-io/github-action@v6.6.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.0.2
         with:
-          command: npm run cy:run
+          node-version: '21.7.1'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Cypress tests
+        run: npm run cy:test
+        env:
+          BROWSER: ${{ matrix.browser }}
+
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-            name: e2e-test-report
-            path: |
-              cypress/reports/html/
+          name: e2e-test-report-${{ matrix.browser }}-${{ github.run_id }}
+          path: |
+            cypress/reports/html/

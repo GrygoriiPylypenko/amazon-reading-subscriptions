@@ -1,5 +1,6 @@
 import MainPage from '../fixtures/page_object/main.page';
 import RegisterPage from '../fixtures/page_object/register.page';
+import SearchBar from '../fixtures/page_object/search.bar';
 import { faker } from '@faker-js/faker';
 let bookSearchData;
 let customerName;
@@ -18,7 +19,7 @@ describe('End-To-End test for Amazon Reading Subscription', () => {
   });
 
   it('End-To-End test select first book from search result and register', () => {
-    MainPage.selectSearchInputField.type('Reading subscription{enter}');
+    SearchBar.selectSearchInputField.type('Reading subscription{enter}');
     MainPage.selectKindleUnlimitedEligibleCheckBox.check({ force: true });
     MainPage.selectCustomerReviewStars(bookSearchData.reviewStars);
     MainPage.assignBookInSearchResultData(bookSearchData.searchResult).as('bookData');
