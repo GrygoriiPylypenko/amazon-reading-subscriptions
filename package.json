@@ -3,11 +3,7 @@
   "version": "1.0.0",
   "description": "Reading Subscription Automation Testing Framework",
   "scripts": {
-    "delete:reports": "rm -r cypress/results/* || true && rm -r mochawesome-report/* || true",
-    "prereport": "npm run delete:reports",
-    "mochawesome:merge": "npx mochawesome-merge \"cypress/results/mochawesome/*.json\" > mochawesome.json && npx marge mochawesome.json",
-    "cy:run": "npm run prereport && cypress run",
-    "cy:crossbrowsers": "npx run"
+    "cy:test": "cypress run --browser $BROWSER"
   },
   "author": "Grygorii Pylypenko",
   "license": "ISC",
