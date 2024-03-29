@@ -32,7 +32,7 @@ jobs:
         uses: cypress-io/github-action@v6.6.1
         with:
           browser: ${{ matrix.browser }}
-          start: npm start
+          start: npm run cy:run
           wait-on: 'http://localhost:8080'
           wait-on-timeout: 60
       - name: Upload report

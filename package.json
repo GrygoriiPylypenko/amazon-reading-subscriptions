@@ -6,8 +6,7 @@
     "delete:reports": "rm -r cypress/results/* || true && rm -r mochawesome-report/* || true",
     "prereport": "npm run delete:reports",
     "mochawesome:merge": "npx mochawesome-merge \"cypress/results/mochawesome/*.json\" > mochawesome.json && npx marge mochawesome.json",
-    "cy:run": "npm run prereport && cypress run",
-    "cy:crossbrowsers": "npx run"
+    "cy:run": "npm run prereport && cypress run"
   },
   "author": "Grygorii Pylypenko",
   "license": "ISC",
