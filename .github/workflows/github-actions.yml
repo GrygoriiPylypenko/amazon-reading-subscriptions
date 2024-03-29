@@ -7,18 +7,38 @@ on:
 
 jobs:
   E2E-Test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chrome, firefox, edge]
+      fail-fast: false
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
+
+      - name: Cache node modules
+        uses: actions/cache@v3.2.4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Cypress run
         uses: cypress-io/github-action@v6.6.1
         with:
-          command: npm run cy:run
+          browser: ${{ matrix.browser }}
+          start: npm start
+          wait-on: 'http://localhost:8080'
+          wait-on-timeout: 60
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-            name: e2e-test-report
-            path: |
-              cypress/reports/html/
+          name: e2e-test-report-${{ matrix.browser }}-${{ github.run_id }}
+          path: |
+            cypress/reports/html/**
