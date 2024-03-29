@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Reading Subscription Automation Testing Framework",
   "scripts": {
-    "cy:run": "cypress run"
+    "cy:test": "cypress run --browser $BROWSER"
   },
   "author": "Grygorii Pylypenko",
   "license": "ISC",
