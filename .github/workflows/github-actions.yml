@@ -32,11 +32,7 @@ jobs:
         uses: cypress-io/github-action@v6.6.1
         with:
           browser: ${{ matrix.browser }}
-          command: npm run cy:run
-          
-      - name: Generate report
-        if: always()
-        run: npm run mochawesome:merge
+          command: npm run
 
       - name: Upload report
         if: always()
@@ -44,5 +40,4 @@ jobs:
         with:
           name: e2e-test-report-${{ matrix.browser }}-${{ github.run_id }}
           path: |
-            mochawesome.json
-            mochawesome-report/**
+            cypress/reports/html/
