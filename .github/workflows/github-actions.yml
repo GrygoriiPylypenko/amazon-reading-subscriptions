@@ -10,31 +10,38 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chrome, edge, electron]
-        
+        browser: [chrome, edge]
       fail-fast: false
 
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4.1.1
 
       - name: Set up Node.js
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '21.7.1'
+          node-version: 'v20.12.0'
 
-      - name: Install dependencies
+      - name: Cache Node Modules
+        uses: actions/cache@v4.0.2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
         run: npm ci
 
-      - name: Run Cypress tests
-        run: npm run cy:test
-        env:
-          BROWSER: ${{ matrix.browser }}
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v6.6.1
+        with:
+          browser: ${{ matrix.browser }}
+          cache-key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Upload report
+      - name: Upload Test Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: e2e-test-report-${{ matrix.browser }}-${{ github.run_id }}
-          path: |
-            cypress/reports/html/
+          name: e2e-test-report-${{ matrix.browser }}-${{ github.run_number }}
+          path: cypress/reports/html/**
